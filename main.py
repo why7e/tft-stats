@@ -5,6 +5,7 @@ import sqlite3
 # Search params
 unit_prefix = 'TFT16'
 patch_number = '16.5'
+minimum_sample_size = 20
 
 # Match patch number to internal patch code
 with open("patch_mapping.json") as f:
@@ -52,6 +53,7 @@ item_stats = (
     )
     .reset_index()
     .sort_values("avg_placement")
+    .query("games > @minimum_sample_size")
 )
 
 print(item_stats)
